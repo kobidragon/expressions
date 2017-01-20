@@ -1,0 +1,34 @@
+<div class="blog-post">
+<h2 class="blog-post-title">Ubuntu 16.04 on Hyper-V - part 3</h2>
+<p class="blog-description">A developer's guide for exporting and cloning.</p>
+<p class="blog-post-meta">November 11, 2016 by <a href="#/blog/:about">Danny Kobayashi</a></p>
+
+<h2>Now that everything is perfect - clone it</h2>
+<p>You have put a lot of effort into creating the perfect platform upon which you can base all of your specialized project machines.  Now it is time to save it someplace safe which is done by the export process.  </p>
+
+<h3>If gen 2, do this</h3>
+<p>The UEFI firmware of a gen 2 Linux vm is stored in the Hyper-V configuration files for that vm, not in the vhdx drive files.  When we clone the vm later on, those configuration files are not used.  The UEFI boot information is lost - leading to boot problems.   A gen 2 vm first must be prepped for the export by copying that information into a folder that will remain on disk.</p>  
+<p>These instructions are from the same Microsoft <a href="https://technet.microsoft.com/en-us/windows-server-docs/compute/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v">documentation</a> as previously referenced.    
+Log in to the virtual machine.  Change directory to the boot EFI directory.  Copy the ubuntu directory in to a new directory named boot.  Change directory to the newly created boot directory.  Rename the shimx64.efi file.
+<pre><code>cd /boot/efi/EFI
+sudo cp –r ubuntu/ boot
+cd boot
+sudo mv shimx64.efi bootx64.efi
+</code></pre>
+Shutdown the vm and reboot to test.  It is now ready for cloning. </p>
+
+<h3>Create an export</h3>
+<p>Now right click on the vm in the Hyper-V manager and select Export.  It will prompt for a destination folder.  Put it someplace that has sufficient space as the export will be as large as the original the vm.  When the export runs, it will create a sub-folder with the name of the vm.  Within that will be a folder for the configuration files, a folder for the disk drive files, and a folder for any snapshots.</p>
+
+<h3>Create a copy of the base image</h3>
+<p>Go to the export directory and find the vhdx file in the <code>Virtual Hard Disks</code> directory.  A vm currently exists with the same name as the vhdx file, so rename the file for example - <code>Ubuntu new dev.vhdx</code>.  Go to the default storage location for virtual hard disks, create a folder named <code>Ubuntu new dev</code> and copy the file <code>Ubuntu new dev.vhdx</code> to that folder.  Go to Hyper-V manager and create a new virtual machine using the same guided configuration as before only instead of a new virtual hard disk, select - <pre><code>&#9673 Use an existing virtual hard disk</code></pre> and point to the <code>Ubuntu new dev</code> folder.  The newly created vm is a clone of the original base configuration machine.   </p>
+
+<h3>Fix up Linux networking</h3>
+<p>At this point you will have the original and a clone vm - both will have the same ethernet MAC addresses.  If their IP addresses are being assigned by DHCP, the new vm will continue to obtain the same IP address causing a duplicate network conflict.  To force a reset of the 
+the MAC address, in Hyper-V manager, remove the network adapter from the clone vm.  Start and login to the clone vm, then shut it down.  Add a network adapter back into the clone vm - Hyper-V will assign a new unique MAC address to the new adapter.  Start the clone vm again and a DHCP will assign a different IP address.</p>
+<p>Login and change the name of the Ubuntu vm in <code>/etc/hostname</code> and in <code>/etc/hosts</code> with your favorite command line editor.  This new name is unrelated to the Hyper-V name but should be unique to your other vm hostnames.  Reboot to apply changes.</p>
+
+<h2>Review all that you have accomplished</h2>
+<p>By this time you have brought up Hyper-V on your Windows PC, setup the storage locations and networking defaults, and bypassed the common vm boot problems.  After installing your first Linux vm, you checked for the Microsoft LIS modules that ensure the smooth behavior of the vm, set the screen size to your liking, prepared for the installation of your dev tools and set up for secure remote access.  Then you have taken this jewel that you have created, saved it away, and made a copy that you can freely use for whatever project comes to mind.  One of many copies that can be spun up with minimal effort everytime you desire a new machine.  Congratulations, I hope this capability serves you well.</p>
+</div><!-- /.blog-post -->
+

@@ -1,0 +1,51 @@
+<div class="blog-post">
+<h2 class="blog-post-title">Ubuntu 16.04 on Hyper-V - part 2</h2>
+<p class="blog-description">A developer's guide for installing an Ubuntu vm.</p>
+<p class="blog-post-meta">November 11, 2016 by <a href="#/blog/:about">Danny Kobayashi</a></p>
+
+<h2>Installing the first vm</h2>
+<p>Everyone has their favorite Linux distros, I will focus here on Ubuntu 16.04 desktop version.  If you are not a fan of Unity, a very nice alternative is Mate which is the same 16.04 base with a lightweight GUI.  Spinning up a new virtual machine in Hyper-V is done in the same manner as all hypervisors.  Start by downloading the installation ISO for the OS of your choice.</p>
+<p>Use the <code>New > Virtual Machine</code> guided configuration.  Give the new vm a name and select the default location for storage.  I suggest that you start by creating a generation 1 vm - for simplicity.  Take the default 1 GB memory allocation - it is easily changed later.  Select the external virtual network you have created for the connection.  And select - <pre><code>&#9673 Create a virtual hard disk</code></pre> with a sufficient amount of storage - this number represents the maximum as it is thin provisioned.  Select - <pre><code>&#9673 Install an operating system from a bootable CD/DVD-ROM</code></pre>and point to the downloaded ISO file.  Then let the build process run.  When it finishes, the new vm will appear in the list.  Right click to <code>Connect</code> - this will bring up a blank console.  Right click again to <code>Start</code> and the vm will be launched.  The installation screen for Linux will appear.  Proceed with the installation as normal.  When configuring the network, select the option to obtain the IP address dynamically by DHCP.  If you are knowledgeable with LVM, creating the primary volume as LVM managed during installation will provide a means of modifying the volume later - a great help when cloning.    There are many fine posts on installing Linux - please consult them for the step-by-step descriptions for your distro.  </p>
+
+<h2>After your vm is installed</h2>
+<p>You have now successfully installed Ubuntu.  Run apt-get update and apt-get upgrade to bring the system to current levels.</p>
+<pre><code>sudo apt-get update
+sudo apt-get upgrade</code></pre>
+
+<h3>Microsoft Linux Integration Services (LIS) modules</h3>
+<p>Microsoft provides LIS modules that run in the Linux vm to provide smoother integration with the Hyper-V host, much like the VMWare Tools and Virtualbox Guest Additions.  Luckily these have been part of the standard Ubuntu distro since 12.04.  On your Ubuntu vm command line and issue <pre><code>lsmod | grep hyperv</code></pre> which should return a list of hyperv modules.  If they do not exist, consult this excellent Microsoft <a href="https://technet.microsoft.com/en-us/windows-server-docs/compute/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v">documentation</a> page regarding Ubuntu support on Hyper-V.</p>
+
+<h3>Change the video resolution</h3>
+<p>You have successfully booted up the Ubuntu vm and logged in, but the screen display is way too small.  No amount of playing with the resolution in Ubuntu makes any difference.  There is no simple GUI to change the resolution, it has to be done in the Ubuntu GRUB boot configuration.  Login to the Ubuntu command line, edit the line in <code>/etc/default/grub</code> as follows.
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash video=hyperv_fb:yhhhhxvvvv</code></pre>
+Where hhhhxvvvv is a resolution such as 1920x1080 which is the maximum supported.  The change will not yet take effect until you run this command.
+<pre><code>sudo update-grub</code></pre>
+Now reboot the vm.  </p>
+<p>If you have problems, you may want to access the GRUB command line during boot up and run the videoinfo command that displays the available GRUB video resolutions.  The standard method to jump into GRUB is to hold the spacebar (or shift or esc) during boot.  If does not work for you in a vm then you can change the GRUB parameters to always stop and display the boot menu.  Edit this line in <code>/etc/default/grub</code> to the value -1.  
+<pre><code>GRUB_TIMEOUT=-1</code></pre>  Then update GRUB.  Then reboot.  When the GRUB menu appears, type the letter c to enter the command line.</p>
+<p>The Windows 10 anniversary update made significant changes to display DPI scaling.  If your host machine is Windows 10 build version 1607 or above (type winver into the run app) then the vm console display will be blurry if the size setting under <code>Settings > Display</code> is set to some value other than 100%. </p>
+
+<h3>Getting the dev environment ready</h3>
+<p>This part has nothing to do with Hyper-V but just some tips before you install your development tools.  Some of those tools may require either C++ or make, so check for them with 
+<pre><code>gcc --version
+make --version</code></pre>  If missing, install the GNU development libraries.  <pre><code>sudo apt-get install build-essential</code></pre>   Check for the Java runtime required by Pycharm.  <pre><code>java -version</code></pre>  On Ubuntu, Java can be install by apt-get.  <pre><code>sudo apt-get install default-jre</code></pre> Lastly, remember that the excellent editors Atom and Visual Studio Code are both available on Linux.</p>
+
+<h3>Optional - SSH access to the command line</h3>
+<p>This may not be absolutely necessary since you will have direct access to the console of the vm.  But anyone with a background in server administration will consider SSH access a must.  First enable the firewall and check the status. 
+<pre><code>sudo ufw enable 
+sudo ufw status verbose</code></pre>  Next, install the OpenSSH server and check its status. 
+<pre><code>sudo apt-get install openssh-server
+systemctl status sshd.service</code></pre>
+List apps defined to the firewall, add an entry for the SSH server to the firewall, then display the info for the new app profile.  
+<pre><code>sudo ufw app list
+sudo ufw allow in OpenSSH   
+sudo ufw app info OpenSSH</code></pre>
+Consider implementing SSH access without passwords through the use of keygen.</p>
+
+</div>
+
+<nav>
+<ul class="pager">
+    <li><a href="#/blog/:101b">Go to Part 3</a></li>
+</ul>
+</nav>

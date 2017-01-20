@@ -1,0 +1,27 @@
+/* CUSTOMIZE THE 3D page
+-------------------------------------------------- */
+/*
+*/
+
+#top-3D {
+  background-color: #F3F3F3;
+  color: darkslategrey;
+  position: relative;
+  top: 10px;
+  left: 0px;
+}
+
+#canvas1 {
+  position:relative;
+  top:0px;
+  left:0px;
+  border: none;
+  background-color:#FFFFFF;
+}
+
+#instructions {
+  position:relative;
+  top:0px; 
+  left:0px;
+}
+

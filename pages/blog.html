@@ -1,0 +1,60 @@
+<div id="blogbody">
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="#/blog/:welcome">Welcome</a>
+          <a class="blog-nav-item" href="#/blog/:future">Future features</a>
+          <a class="blog-nav-item" href="#/blog/:about">About</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title">TL;DR <small>- a notebook<small</h1>
+        <p class="lead blog-description">Notes on code and configurations to help the second time around.</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-8 blog-main">
+
+          <!-- This is where the meat of the blog html is inserted -->
+          <div ng-include src=blogurl></div>
+          <!-- <div ng-bind-html="bindtext"></div> -->
+
+
+        </div><!-- /.blog-main -->
+
+
+        <div class="col-md-3 col-md-offset-1 blog-sidebar">
+          <div class="sidebar-module">
+            <h4>TL;DR</h4>
+            <ol class="list-unstyled">
+
+              <li><a href="#/blog/:102">Mneuonic password guide</a></li>
+              <li><a href="#/blog/:101">Ubuntu 16.04 on Hyper-V - part 1</a></li>
+              <li><a href="#/blog/:101a">Ubuntu 16.04 on Hyper-V - part 2</a></li>
+              <li><a href="#/blog/:101b">Ubuntu 16.04 on Hyper-V - part 3</a></li>     
+
+            </ol>
+          </div>
+
+          <div class="sidebar-module">
+            <h4>Apps</h4>
+            <ol class="list-unstyled">
+              <li><a href="/3dapp/3dstart.html" target="_blank">3D on the web</a></li>
+              <li><a href="#/mneumonic">Mneumonic passwords</a></li>
+            </ol>
+          </div>
+
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+    
+    </div> <!-- /#blogbody -->
+
+<littleforestfooter>

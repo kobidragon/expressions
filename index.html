@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app=siteApp>
+    <head>
+        <title>Expressions in code</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta charset="UTF-8">
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <!-- load angular via CDN -->
+        <script src="https://code.angularjs.org/1.5.8/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.8/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.8/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
+
+        <!--zxcvbn.js password strenght checker -->
+        <script src="js/zxcvbn.js"></script>
+
+        <!-- load application files -->
+        <script src="app.js"></script>
+        <script src="controllers.js"></script>
+        <script src="services.js"></script>
+        <script src="mneumonicService.js"></script>
+        <script src="directives.js"></script>
+        <script src="routes.js"></script>
+
+        <!-- Custom styles for this template -->
+       <link href="assets/css/custom.css" rel="stylesheet">
+
+        <!-- favicon -->
+       <link href="assets/img/favicon.png" rel="shortcut icon">
+
+
+    </head>
+    <body id=default_scheme>
+
+      <div id=barid>
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#/">Expressions in code</a>
+          </div>
+          <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="#/blog/:welcome">TL;DR</a></li>
+              <li><a href="#/blog/:about">About</a></li>
+            </ul>
+
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+      </div>
+      <div ng-view></div>
+
+    </body>
+</html>

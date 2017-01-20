@@ -1,0 +1,28 @@
+<div class="blog-post">
+<h2 class="blog-post-title">Ubuntu 16.04 on Hyper-V - part 1</h2>
+<p class="blog-description">A developer's guide for preparing the Hyper-v environment.</p>
+<p class="blog-post-meta">November 11, 2016 by <a href="#/blog/:about">Danny Kobayashi</a></p>
+
+<p>There a some good reasons for developers to look at Linux as programming environment.  Linux has become the defacto server platform and is a desirable programmer's OS for certain niches - I prefer it for Python development, for instance.  It is also nice to be able to run Apache, NGINX, MySQL and MongoDB on Linux on your development computer, as it would be in production.  But installing and uninstalling programs for experimental purposes can get messy on a physical Linux machine.  Running separate, clean, purpose-built machines is a perfect scenario for virtualization.  First create a virtual machine that has a ready-to-go base configuration.  Then create clones for each new use case - developing a node.js backend, coming up to speed with Angular 2, creating a machine learning app in Python.  Did you accidentally create a frankenstein?  Delete it, and build a new machine without having to start from scratch again.   If your everday host OS is Linux, then KVM is awesome, but most people prefer to live in OSX or Windows.  On Windows, Hyper-V has become mature, useable and efficient - and it is part of Windows 8 and 10 Pro.  Hyper-V may not be familiar to many programmers, but with a little help around the quirks it can be quite useful.</p>
+<hr>
+
+<h2>A guide to avoiding the pitfalls</h2>
+<p>Hyper-V is not a program to be installed, but instead, a Windows feature to be turned on.  That is done in <code>Control Panel > Programs and Features > Turn Windows features on or off</code> - that's the easy part.  Microsoft provides a raft of documentation on Hyper-V which I will make no attempt to duplicate.  Instead I concentrate on the pitfalls you may encounter even after reading the documentation.</p>
+
+<h2>Before building the first vm</h2>
+<h3>Virtual machine file locations</h3>
+<p>By default, Hyper-v will place the virtual machine data in two locations that you may want to change.  The configuration files for each vm are stored in <code>C:\ProgramData\Microsoft\Windows\Hyper-V</code>.  And the data files that are the virtualized hard drives for each vm are in <code>C:\Users\Public\Documents\Hyper-V\Virtual Hard Disks</code>.  Since these files can become quite large, I prefer to keep them off of <code>C:</code>. In the Hyper-V Manager, these locations can be changed in the Hyper-V Settings window under <code>Virtual Hard Disks and Virtual Machines</code>.  Changing these locations before creating your first vm's will save you the trouble of moving them later - a procedure that is simple but time consuming and similar to cloning that is covered later.</p>
+
+<h3>Network issues with WIFI</h3>
+<p>Like all of the popular hypervisors, Hyper-V uses virtual switches to connect the vm's to either real or virtual networks.  There are 3 types of switches that can be created - external, internal and private.  I recommend that you start by creating an external switch in order to provide connectivity from the vm to other devices on the real LAN and to the Internet.  An external virtual switch requires binding to a physical network adapter on the host.  Unfortunately Hyper-V has issues in binding a virtual switch to a WIFI adapter that shares traffic with the host computer, a common configuration when the host is a laptop.  The simplest workaround is to use a separate adapter dedicated to the virtual switch - either built-in or USB ethernet or a USB WIFI adapter.  When configuring a virtual switch that is bound to a dedicated adapter, uncheck the box labelled - <pre><code>&#x25fb Allow management operating system to share this network adapter</code></pre>  If this is checked, Windows will share host traffic on the physical adapter by creating non-physical bridge adapters shown in the host machine's <code>Control Panel > Network and Internet > Network Connections</code>.  Sharing traffic works fine over ethernet, but even then, bridge adapters can make troubleshooting more confusing when Windows networking hiccups.</p>
+
+<h3>Booting a generation 2 vm</h3>
+<p>This is an old problem but worth mentioning as it is a common and baffling tripping point.  There are 2 types of Hyper-V virtual machines that is defined at the time of creation - generation 1 and 2.  Gen 1 vm's emulate legacy devices and gen 2 emulate more modern devices such as SCSI.  Let's say you are creating a gen 2 vm for the first time after successfully creating many gen 1 vm's by using the same installation ISO file.  All of a sudden you have problems booting the ISO.  The issue is that the gen 1 vm uses BIOS based booting, while gen 2 is UEFI based.  Many who have tried to swap out the boot drive of a newer PC have been set back by the more complex boot process of UEFI.  The workaround to most of your gen 2 boot problems is the same as when you tried to upgrade that PC, disable UEFI secure boot (found in the vm settings under Security).  You can lock it down if you need to afterwards.  The Ubuntu installation under certain conditions will ask if you want to force a UEFI installation - the proper response is to "Continue".  There is also an issue when trying to copy an existing Ubuntu gen 2 vm - which is covered later when we discuss cloning.</p>
+
+</div>
+
+<nav>
+<ul class="pager">
+    <li><a href="#/blog/:101a">Go to Part 2</a></li>
+</ul>
+</nav>

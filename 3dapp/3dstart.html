@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>3D on the web</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="three.js"></script>
+    <script src='OrbitControls.js'></script>
+    <script src='ParametricGeometries.js'></script>
+    <script src='plate_bar.js'></script>
+
+    <!-- Custom styles for this template -->
+    <link href="custom.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <div id='top-3D'  class='jumbotron text-md-center' >
+    <!-- center jumbotron text -->
+            <h1>3D on the web <small class="text-muted">- The joys of three.js</small></h1>
+            <img style="float:right" src="early-VR.jpg">
+            <p class='lead text-muted'>Virtual reality is coming to the web in the form of Mozilla WebVR with browser support being developed for Firefox, Chrome and Edge. Today, 3D graphics in browser is made available by the THREE.js Javascript library.  Both WebVR and THREE.js are based on WebGL, a browser port of the venerable OpenGL.</p>
+
+          <p>These libraries, vastly improve the time to code 3D applications by hiding the many details needed to render even a simple object in WebGL.  No understanding of affine transforms in homogeneous coordinates necessary!  No need to write code for GPU shaders!</p>
+
+
+        </div>
+
+        <div>
+        <canvas id="canvas1" >
+        Sorry you browser does not support HTML canvas.
+        </canvas>
+
+        <div id='instructions'   class="col-md-12">
+        <p>Right click and drag the mouse to orbit the scene.  Use the scroll wheel to zoom in and out.</p>
+        </div>
+
+
+        </div>
+
+
+
+</div> <!--container-->
+</body>
+
+</html>

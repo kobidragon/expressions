@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div id='top-section' class='jumbotron text-md-center'>
+  <!-- center jumbotron text -->
+  <div class="container">
+    <h1>Mneumonics <small class="text-muted">- a password generator</small></h1>
+    <p class='lead text-muted'>Create passwords that are hard to crack but easy to memorize using an age-old trick.
+    </p>
+  </div>
+  </div>
+
+  <div class="col-md-12 blog-main" >
+    <p>How does someone who is not a savant remember a random-ish password such as the following?</p>
+    <p><pre><code>AtKhaatKmcp@Ht4a</code></pre> For generations, the phrase "Every good boy does fine" has helped fledgling musicians remember the music scale - EGBDF.  In this case, the above password is derived from the first letters of the following phrase with a number and special character added to boost randomness.
+    <pre><code>All the King's horses and all the King's men couldn't put Humpty together again!</code></pre> </p>
+    <p>Enter a phrase, sentence or several sentences into the box below and the app will take the first letters from each word and then also ensure that at least 1 number and 1 special character is included in the passphrase.  Click the Submit button to generate a passphrase, click again to generate another variation.  The details and rationale behind the process are covered in the TL;DR article <a href="#/blog/:102">Mneumonic password guide</a>.</p>
+        <p>The generated password should be regarded as a suggestion, and should be modified by the person before using as an actual password.  Even though this app does not send any data over the Internet during the generation and checking of the password, any Internet app should be regarded as insecure when it comes to the protection of your vital access credentials.</p>
+    <br><br>
+  </div>
+          
+<div class="container">
+
+  <div class=" col-md-12">
+    <label for="phrase-text-input" class="col-md-6 col-form-label">Enter your phrase - a minimum of 6 words</label>
+    <input class="form-control" type="text" id="phrase-text-input" ng-model="phrase">
+    <br>
+    <button class="btn btn-primary" type="button" ng-click="submitButton()">Submit</button>
+  </div>
+
+  <div class="col-md-6">
+    <h4><br>Your generated password is </h4>
+    <pre><code><h4>{{genpassword}}</h4></code></pre>
+    <br>
+  </div>
+
+</div>
+
+
+<div class="container">
+        <div class="alert alert-danger" role="alert" ng-hide="invalidalert">Please provide at least 6 alphabetic words.</div>
+        <div class="alert alert-success" role="alert" ng-hide="if4">Strength is level 4.  Strong protection from offline attacks.  {{zxcvbncrack}}</div>
+        <div class="alert alert-info" role="alert" ng-hide="if3">Strength is level 3.  Moderate protection from offline attacks.  {{zxcvbncrack}}</div>
+        <div class="alert alert-warning" role="alert" ng-hide="if2">Strength is level 2.  Adequate protection from online attacks only.  {{zxcvbncrack}}</div>
+        <div class="alert alert-danger" role="alert" ng-hide="if1">Strength is level 1.  Moderate protection from online attacks only.  {{zxcvbncrack}}</div>
+        <div class="alert alert-danger" role="alert" ng-hide="if0">Strength is level 0.  Risky password.  {{zxcvbncrack}}</div>
+</div>
+
+</div>
+
+<littleforestfooter>
